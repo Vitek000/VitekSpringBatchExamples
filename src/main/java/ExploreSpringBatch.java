@@ -15,7 +15,9 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.repeat.CompletionPolicy;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.batch.repeat.policy.SimpleCompletionPolicy;
 
 import java.util.Date;
 
@@ -44,6 +46,8 @@ public class ExploreSpringBatch {
         CallableTaskletAdapter callableTaskletAdapter;
         MethodInvokingTaskletAdapter methodInvokingTaskletAdapter;
         SystemProcessExitCodeMapper systemProcessExitCodeMapper;
+        CompletionPolicy completionPolicy;
+        SimpleCompletionPolicy simpleCompletionPolicy;
 
 
 
