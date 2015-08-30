@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+        <job id="simpleTaskletStepJob" xmlns="http://www.springframework.org/schema/batch">
+                <step id="helloWorldTaskletStep">
+                        <tasklet>
+                                <bean xmlns="http://www.springframework.org/schema/beans"
+                                      class="HelloWorldTasklet" />
+                        </tasklet>
+                </step>
+        </job>
+
+
+    <bean id="helloJobListener"
+                class="HelloJobListener"/>
+    <!-- Job 2 -->
+    <job id="simpleTaskletStepJob2" xmlns="http://www.springframework.org/schema/batch">
+        <step id="helloWorldTaskletStep_2_1" next="helloWorldTaskletStep_2_2" >
+            <tasklet>
+                <bean xmlns="http://www.springframework.org/schema/beans"
+                      class="HelloWorldTasklet" />
+            </tasklet>
+        </step>
+
+        <step id="helloWorldTaskletStep_2_2">
+            <tasklet>
+                <bean xmlns="http://www.springframework.org/schema/beans"
+                      class="HelloWorldTasklet2" />
+            </tasklet>
+        </step>
+
+        <listeners>
+            <listener ref="helloJobListener"/>
+        </listeners>
+    </job>
+
+
+        <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+
+        <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+                <property name="jobRepository" ref="jobRepository"/>
+        </bean>
+
+        <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean"/>
+
+</beans>
